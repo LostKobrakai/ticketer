@@ -5,26 +5,26 @@ defmodule TicketDispenser do
     GenServer.start_link(__MODULE__, state, opts)
   end
 
-  def reserve() do
-    GenServer.call(__MODULE__, :reserve)
+  def reserve(identifier) do
+    GenServer.call(identifier, :reserve)
   end
 
-  def state() do
-    GenServer.call(__MODULE__, :state)
+  def state(identifier) do
+    GenServer.call(identifier, :state)
   end
 
-  def return(%Ticket{id: id}) do
-    GenServer.call(__MODULE__, {:return, id})
+  def return(identifier, %Ticket{id: id}) do
+    GenServer.call(identifier, {:return, id})
   end
 
-  def return(id) do
-    GenServer.call(__MODULE__, {:return, id})
+  def return(identifier, id) do
+    GenServer.call(identifier, {:return, id})
   end
 
   # Callbacks
 
-  def init({amount, timeout, name}) do
-    tickets = 1..amount |> Enum.map(&(%Ticket{id: &1, event: name}))
+  def init({amount, timeout, id}) do
+    tickets = 1..amount |> Enum.map(&(%Ticket{id: &1, event: id}))
 
     {:ok, %{free: tickets, taken: [], timeout: timeout}}
   end
@@ -43,7 +43,7 @@ defmodule TicketDispenser do
   end
 
   def handle_call(:state, _from, state) do
-    {:reply, {:error, state}, state}
+    {:reply, {:ok, state}, state}
   end
 
   def handle_call({:return, id}, _from, %{free: tickets, taken: taken} = state) do

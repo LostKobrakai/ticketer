@@ -2,15 +2,15 @@ defmodule TicketerSupervisor do
 	use Supervisor
 
 	@events [
-		{:slot1, {10, nil, "Slot 1"}},
-		{:slot2, {10, nil, "Slot 2"}},
-		{:slot3, {10, nil, "Slot 3"}},
-		{:slot4, {10, nil, "Slot 4"}},
-		{:slot5, {10, nil, "Slot 5"}},
-		{:slot6, {10, nil, "Slot 6"}},
-		{:slot7, {10, nil, "Slot 7"}},
-		{:slot8, {10, nil, "Slot 8"}},
-		{:slot9, {10, nil, "Slot 9"}}
+		{:slot1, {10, nil, 1000}},
+		{:slot2, {10, nil, 1001}},
+		{:slot3, {10, nil, 1002}},
+		{:slot4, {10, nil, 1003}},
+		{:slot5, {10, nil, 1004}},
+		{:slot6, {10, nil, 1005}},
+		{:slot7, {10, nil, 1006}},
+		{:slot8, {10, nil, 1007}},
+		{:slot9, {10, nil, 1008}}
 	]
 
 	def start_link do
