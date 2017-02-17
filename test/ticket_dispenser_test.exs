@@ -43,13 +43,13 @@ defmodule TicketDispenserTest do
   end
 
   test "simulate load" do
-    {:ok, pid} = TicketDispenser.start_link({15, nil, 1001})
+    {:ok, pid} = TicketDispenser.start_link({11000, nil, 1001})
 
-    result = 1..100
+    result = 1..40000
       |> Stream.map(fn(_) -> Task.async(fn -> TicketDispenser.reserve(pid) end) end)
       |> Enum.map(fn(task) -> Task.await(task) end)
 
-    assert 15 === Enum.count(result, &(match?({:ok, _}, &1)))
-    assert 100 - 15 === Enum.count(result, &(match?({:error, _}, &1)))
+    assert 11000 === Enum.count(result, &(match?({:ok, _}, &1)))
+    assert 40000 - 11000 === Enum.count(result, &(match?({:error, _}, &1)))
   end
 end
